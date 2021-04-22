@@ -302,6 +302,7 @@ describe('Component', () => {
       expect(events).toEqual([
         'componentWillMount',
         'render',
+        'render',
         'componentDidMount',
         'shouldComponentUpdate',
         'componentWillUpdate',
@@ -310,6 +311,15 @@ describe('Component', () => {
         'shouldComponentUpdate',
         'componentWillUnmount'
       ])
+
+      // Expected $[2] = 'render' to equal 'componentDidMount'.
+      // Expected $[3] = 'componentDidMount' to equal 'shouldComponentUpdate'.
+      // Expected $[4] = 'shouldComponentUpdate' to equal 'componentWillUpdate'.
+      // Expected $[5] = 'componentWillUpdate' to equal 'render'.
+      // Expected $[6] = 'render' to equal 'componentDidUpdate'.
+      // Expected $[7] = 'componentDidUpdate' to equal 'shouldComponentUpdate'.
+      // Expected $[8] = 'shouldComponentUpdate' to equal 'componentWillUnmount'.
+      // Unexpected $[9] = 'componentWillUnmount' in array.
     })
   })
 })
