@@ -10,7 +10,7 @@ type OnChanges<T> = {
 abstract class NgComponent<
   Props extends { [k: string]: any } = {},
   State extends { [k: string]: any } = {}
-> {
+  > {
 
   private __isFirstRender = true
 
@@ -52,6 +52,7 @@ abstract class NgComponent<
   }
 
   $postLink() {
+    this.render();
     this.componentDidMount()
   }
 
@@ -66,14 +67,14 @@ abstract class NgComponent<
   /*
     lifecycle hooks
   */
-  componentWillMount(): void {}
-  componentDidMount(): void {}
+  componentWillMount(): void { }
+  componentDidMount(): void { }
   componentWillReceiveProps(_props: Partial<Props>): void { }
   shouldComponentUpdate(_nextProps: Partial<Props>, _nextState: State): boolean { return true }
-  componentWillUpdate(_props: Partial<Props>, _state: State): void {}
-  componentDidUpdate(_props: Partial<Props>, _state: State): void {}
-  componentWillUnmount() {}
-  render(): void {}
+  componentWillUpdate(_props: Partial<Props>, _state: State): void { }
+  componentDidUpdate(_props: Partial<Props>, _state: State): void { }
+  componentWillUnmount() { }
+  render(): void { }
 }
 
 export default NgComponent
