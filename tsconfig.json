@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "es2015"],
+    "lib": [
+      "dom",
+      "es2015"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -10,10 +13,14 @@
     "outDir": ".",
     "sourceMap": true,
     "strict": true,
-    "target": "es5"
+    "target": "es5",
+    "skipLibCheck": true
   },
   "files": [
     "./index.ts",
     "./test.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
