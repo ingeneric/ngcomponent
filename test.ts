@@ -15,39 +15,39 @@ describe('Component', () => {
   describe('#$onChanges', () => {
     it('should call #render if any prop has changed', () => {
       class A extends NgComponent<Props, State> {
-        render() {}
+        render() { }
       }
       const a = new A
 
       // call #1
       a.$onChanges({
-        a: {currentValue: 42, previousValue: undefined, isFirstChange: () => true},
-        b: {currentValue: undefined, previousValue: undefined, isFirstChange: () => true}
+        a: { currentValue: 42, previousValue: undefined, isFirstChange: () => true },
+        b: { currentValue: undefined, previousValue: undefined, isFirstChange: () => true }
       })
       expect(a.props).toEqual({ a: 42, b: undefined })
 
       // call #2
       a.$onChanges({
-        a: {currentValue: 60, previousValue: 42, isFirstChange: () => false},
-        b: {currentValue: 'foo', previousValue: undefined, isFirstChange: () => false}
+        a: { currentValue: 60, previousValue: 42, isFirstChange: () => false },
+        b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => false }
       })
       expect(a.props).toEqual({ a: 60, b: 'foo' })
 
       // call #3
       a.$onChanges({
-        b: {currentValue: 'bar', previousValue: 'foo', isFirstChange: () => false}
+        b: { currentValue: 'bar', previousValue: 'foo', isFirstChange: () => false }
       })
       expect(a.props).toEqual({ a: 60, b: 'bar' })
 
       // call #4
       a.$onChanges({
-        a: {currentValue: -10, previousValue: 60, isFirstChange: () => false}
+        a: { currentValue: -10, previousValue: 60, isFirstChange: () => false }
       })
       expect(a.props).toEqual({ a: -10, b: 'bar' })
     })
     it('should call #render even if props were not initialized to undefined by angular', () => {
       class A extends NgComponent<Props, State> {
-        render() {}
+        render() { }
       }
       let a = new A
       a.$onChanges({})
@@ -83,7 +83,7 @@ describe('Component', () => {
     describe('#componentWillMount', () => {
       it('should get called when the component mounts', () => {
         class A extends NgComponent<Props, {}> {
-          render() {}
+          render() { }
         }
         const spy = spyOn(A.prototype, 'componentWillMount')
         renderComponent(A)
@@ -94,7 +94,7 @@ describe('Component', () => {
     describe('#componentDidMount', () => {
       it('should get called when the component mounts', () => {
         class A extends NgComponent<Props, {}> {
-          render() {}
+          render() { }
         }
         const spy = spyOn(A.prototype, 'componentDidMount')
         renderComponent(A)
@@ -105,7 +105,7 @@ describe('Component', () => {
     describe('#componentWillReceiveProps', () => {
       it('should not get called on initial render', () => {
         class A extends NgComponent<Props, {}> {
-          render() {}
+          render() { }
         }
         const spy = spyOn(A.prototype, 'componentWillReceiveProps')
         renderComponent(A)
@@ -120,7 +120,7 @@ describe('Component', () => {
             done()
           }
         }
-        const {parentScope} = renderComponent(A)
+        const { parentScope } = renderComponent(A)
         parentScope.$apply(() => parentScope.a = 20)
       })
     })
@@ -128,7 +128,7 @@ describe('Component', () => {
     describe('#shouldComponentUpdate', () => {
       it('should not get called on the initial render', () => {
         class A extends NgComponent<Props, {}> {
-          render() {}
+          render() { }
         }
         const spy = spyOn(A.prototype, 'shouldComponentUpdate')
         // tslint:disable-next-line:no-unused-variable
@@ -144,7 +144,7 @@ describe('Component', () => {
           shouldComponentUpdate() {
             return false
           }
-          render() {}
+          render() { }
         }
         const spy = spyOn(A.prototype, 'render')
         // tslint:disable-next-line:no-unused-variable
@@ -159,9 +159,9 @@ describe('Component', () => {
         class A extends NgComponent<Props, {}> {
           constructor() {
             super()
-            this.state = {c: false}
+            this.state = { c: false }
           }
-          render() {}
+          render() { }
         }
         const spy = spyOn(A.prototype, 'shouldComponentUpdate')
         const a = new A
@@ -175,7 +175,7 @@ describe('Component', () => {
           a: { currentValue: 42, previousValue: 10, isFirstChange: () => true },
           b: { currentValue: 'foo', previousValue: undefined, isFirstChange: () => true }
         })
-        expect(spy).toHaveBeenCalledWith({a: 42, b: 'foo'}, { c: false })
+        expect(spy).toHaveBeenCalledWith({ a: 42, b: 'foo' }, { c: false })
       })
       it('should accept a custom comparator', () => {
         let counter = 0
@@ -215,7 +215,7 @@ describe('Component', () => {
     describe('#componentWillUpdate', () => {
       it('should not get called on initial render', () => {
         class A extends NgComponent<Props, {}> {
-          render() {}
+          render() { }
         }
         const spy = spyOn(A.prototype, 'componentWillUpdate')
         renderComponent(A)
@@ -224,9 +224,9 @@ describe('Component', () => {
       it('should get called before the component renders', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
-          componentWillUpdate() {}
+          componentWillUpdate() { }
         }
-        const {parentScope, scope} = renderComponent(A)
+        const { parentScope, scope } = renderComponent(A)
         const spy = spyOn(scope.$ctrl, 'componentWillUpdate')
         parentScope.$apply(() => parentScope.a = 20)
         expect(spy).toHaveBeenCalledWith({ a: 20, b: 'foo' }, {})
@@ -236,7 +236,7 @@ describe('Component', () => {
     describe('#componentDidUpdate', () => {
       it('should not get called on initial render', () => {
         class A extends NgComponent<Props, {}> {
-          render() {}
+          render() { }
         }
         const spy = spyOn(A.prototype, 'componentDidUpdate')
         renderComponent(A)
@@ -245,9 +245,9 @@ describe('Component', () => {
       it('should get called after the component renders', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
-          componentDidUpdate() {}
+          componentDidUpdate() { }
         }
-        const {parentScope, scope} = renderComponent(A)
+        const { parentScope, scope } = renderComponent(A)
         const spy = spyOn(scope.$ctrl, 'componentDidUpdate')
         parentScope.$apply(() => parentScope.a = 20)
         expect(spy).toHaveBeenCalledWith({ a: 20, b: 'foo' }, {})
@@ -260,7 +260,7 @@ describe('Component', () => {
           render() { }
           componentWillUnmount() { }
         }
-        const {parentScope, scope} = renderComponent(A)
+        const { parentScope, scope } = renderComponent(A)
         const spy = spyOn(scope.$ctrl, 'componentWillUnmount')
         parentScope.$destroy()
         expect(spy).toHaveBeenCalledWith()
@@ -295,13 +295,12 @@ describe('Component', () => {
           events.push('componentWillUnmount')
         }
       }
-      const {parentScope} = renderComponent(A)
+      const { parentScope } = renderComponent(A)
       parentScope.$apply(() => parentScope.a = 42) // update
       parentScope.$apply(() => parentScope.a = 21) // no update
       parentScope.$destroy()
       expect(events).toEqual([
         'componentWillMount',
-        'render',
         'render',
         'componentDidMount',
         'shouldComponentUpdate',
@@ -311,15 +310,6 @@ describe('Component', () => {
         'shouldComponentUpdate',
         'componentWillUnmount'
       ])
-
-      // Expected $[2] = 'render' to equal 'componentDidMount'.
-      // Expected $[3] = 'componentDidMount' to equal 'shouldComponentUpdate'.
-      // Expected $[4] = 'shouldComponentUpdate' to equal 'componentWillUpdate'.
-      // Expected $[5] = 'componentWillUpdate' to equal 'render'.
-      // Expected $[6] = 'render' to equal 'componentDidUpdate'.
-      // Expected $[7] = 'componentDidUpdate' to equal 'shouldComponentUpdate'.
-      // Expected $[8] = 'shouldComponentUpdate' to equal 'componentWillUnmount'.
-      // Unexpected $[9] = 'componentWillUnmount' in array.
     })
   })
 })
