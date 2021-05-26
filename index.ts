@@ -52,7 +52,7 @@ abstract class NgComponent<
   }
 
   $postLink() {
-    this.render()
+    this.$onChanges({} as OnChanges<Partial<Props>>)
     this.componentDidMount()
   }
 
