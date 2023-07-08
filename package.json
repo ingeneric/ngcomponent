@@ -2,22 +2,6 @@
   "name": "@ingeneric/ngcomponent",
   "version": "6.0.1",
   "description": "A clean React-like abstraction for rendering non-Angular components within an Angular app.",
-  "main": "dist/ngcomponent.js",
-  "typings": "dist/ngcomponent.d.ts",
-  "scripts": {
-    "build": "npm run clean && npm run check && tsc -p tsconfig.build.json",
-    "clean": "rm -f dist/*",
-    "check": "prettier --check src && eslint src",
-    "check:fix": "prettier --write src && eslint --fix src",
-    "prepublishOnly": "npm test",
-    "pretest": "npm run build",
-    "tdd": "jest --watch",
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/ingeneric/ngcomponent.git"
-  },
   "keywords": [
     "angular",
     "component",
@@ -27,15 +11,35 @@
     "state",
     "controller"
   ],
+  "homepage": "https://github.com/ingeneric/ngcomponent#readme",
+  "bugs": {
+    "url": "https://github.com/ingeneric/ngcomponent/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ingeneric/ngcomponent.git"
+  },
+  "license": "Apache-2.0",
   "author": "Boris Cherny <boris@performancejs.com>",
   "contributors": [
     "Chris Khoo <chris.khoo@gmail.com>"
   ],
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/ingeneric/ngcomponent/issues"
+  "type": "module",
+  "exports": "./dist/ngcomponent.js",
+  "scripts": {
+    "build": "npm run clean && npm run check && tsc -p tsconfig.build.json",
+    "check": "prettier --check src && eslint src",
+    "check:fix": "prettier --write src && eslint --fix src",
+    "clean": "rm -f dist/*",
+    "prepublishOnly": "npm test",
+    "tdd": "jest --watch",
+    "pretest": "npm run build",
+    "test": "jest"
   },
-  "homepage": "https://github.com/ingeneric/ngcomponent#readme",
+  "dependencies": {
+    "@types/angular": "^1.8.5",
+    "angular": "^1.8.3"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.2",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
@@ -49,9 +53,7 @@
     "ts-jest": "^29.1.1",
     "typescript": "^5.1.6"
   },
-  "dependencies": {
-    "@types/angular": "^1.8.5",
-    "angular": "^1.8.3"
-  },
-  "type": "module"
+  "engines": {
+    "node": ">=16"
+  }
 }
