@@ -14,7 +14,7 @@ describe('Component', () => {
   describe('#$onChanges', () => {
     test('should call #render if any prop has changed', () => {
       class A extends NgComponent<Props, State> {
-        render() { }
+        override render() { }
       }
       const a = new A
 
@@ -46,7 +46,7 @@ describe('Component', () => {
     })
     test('should call #render even if props were not initialized to undefined by angular', () => {
       class A extends NgComponent<Props, State> {
-        render() { }
+        override render() { }
       }
       let a = new A
       a.$onChanges({})
@@ -57,7 +57,7 @@ describe('Component', () => {
     test('should not call #render if no props have changed', () => {
       let counter = 0
       class A extends NgComponent<Props, {}> {
-        render() { counter++ }
+        override render() { counter++ }
       }
       const a = new A
 
@@ -82,7 +82,7 @@ describe('Component', () => {
     describe('#componentWillMount', () => {
       test('should get called when the component mounts', () => {
         class A extends NgComponent<Props, {}> {
-          render() { }
+          override render() { }
         }
         const spy = jest.spyOn(A.prototype, 'componentWillMount')
         renderComponent(A)
@@ -93,7 +93,7 @@ describe('Component', () => {
     describe('#componentDidMount', () => {
       test('should get called when the component mounts', () => {
         class A extends NgComponent<Props, {}> {
-          render() { }
+          override render() { }
         }
         const spy = jest.spyOn(A.prototype, 'componentDidMount')
         renderComponent(A)
@@ -104,7 +104,7 @@ describe('Component', () => {
     describe('#componentWillReceiveProps', () => {
       test('should not get called on initial render', () => {
         class A extends NgComponent<Props, {}> {
-          render() { }
+          override render() { }
         }
         const spy = jest.spyOn(A.prototype, 'componentWillReceiveProps')
         renderComponent(A)
@@ -112,8 +112,8 @@ describe('Component', () => {
       })
       test('should get called when props update', (done) => {
         class A extends NgComponent<Props, {}> {
-          render() { }
-          componentWillReceiveProps(props: Props) {
+          override render() { }
+          override componentWillReceiveProps(props: Props) {
             expect(props).toEqual({ a: 20, b: 'foo' })
             expect(this.props).not.toEqual(props)
             done()
@@ -127,7 +127,7 @@ describe('Component', () => {
     describe('#shouldComponentUpdate', () => {
       test('should not get called on the initial render', () => {
         class A extends NgComponent<Props, {}> {
-          render() { }
+          override render() { }
         }
         const spy = jest.spyOn(A.prototype, 'shouldComponentUpdate')
         // tslint:disable-next-line:no-unused-variable
@@ -140,10 +140,10 @@ describe('Component', () => {
       })
       test('should render even if false on initial render', () => {
         class A extends NgComponent<Props, {}> {
-          shouldComponentUpdate() {
+          override shouldComponentUpdate() {
             return false
           }
-          render() { }
+          override render() { }
         }
         const spy = jest.spyOn(A.prototype, 'render')
         // tslint:disable-next-line:no-unused-variable
@@ -160,7 +160,7 @@ describe('Component', () => {
             super()
             this.state = { c: false }
           }
-          render() { }
+          override render() { }
         }
         const spy = jest.spyOn(A.prototype, 'shouldComponentUpdate')
         const a = new A
@@ -179,8 +179,8 @@ describe('Component', () => {
       test('should accept a custom comparator', () => {
         let counter = 0
         class A extends NgComponent<Props, {}> {
-          render() { counter++ }
-          shouldComponentUpdate(nextProps: Props): boolean {
+          override render() { counter++ }
+          override shouldComponentUpdate(nextProps: Props): boolean {
             return Boolean(this.props.a && nextProps.a > this.props.a)
           }
         }
@@ -214,7 +214,7 @@ describe('Component', () => {
     describe('#componentWillUpdate', () => {
       test('should not get called on initial render', () => {
         class A extends NgComponent<Props, {}> {
-          render() { }
+          override render() { }
         }
         const spy = jest.spyOn(A.prototype, 'componentWillUpdate')
         renderComponent(A)
@@ -222,8 +222,8 @@ describe('Component', () => {
       })
       test('should get called before the component renders', () => {
         class A extends NgComponent<Props, {}> {
-          render() { }
-          componentWillUpdate() { }
+          override render() { }
+          override componentWillUpdate() { }
         }
         const { parentScope, scope } = renderComponent(A)
         const spy = jest.spyOn(scope.$ctrl, 'componentWillUpdate')
@@ -235,7 +235,7 @@ describe('Component', () => {
     describe('#componentDidUpdate', () => {
       test('should not get called on initial render', () => {
         class A extends NgComponent<Props, {}> {
-          render() { }
+          override render() { }
         }
         const spy = jest.spyOn(A.prototype, 'componentDidUpdate')
         renderComponent(A)
@@ -243,8 +243,8 @@ describe('Component', () => {
       })
       test('should get called after the component renders', () => {
         class A extends NgComponent<Props, {}> {
-          render() { }
-          componentDidUpdate() { }
+          override render() { }
+          override componentDidUpdate() { }
         }
         const { parentScope, scope } = renderComponent(A)
         const spy = jest.spyOn(scope.$ctrl, 'componentDidUpdate')
@@ -256,8 +256,8 @@ describe('Component', () => {
     describe('#componentWillUnmount', () => {
       test('should get called when the component unmounts', () => {
         class A extends NgComponent<Props, {}> {
-          render() { }
-          componentWillUnmount() { }
+          override render() { }
+          override componentWillUnmount() { }
         }
         const { parentScope, scope } = renderComponent(A)
         const spy = jest.spyOn(scope.$ctrl, 'componentWillUnmount')
@@ -271,26 +271,26 @@ describe('Component', () => {
     test('should be called in correct order', () => {
       const events: string[] = []
       class A extends NgComponent<Props, {}> {
-        componentWillMount() {
+        override componentWillMount() {
           events.push('componentWillMount')
         }
-        componentDidMount() {
+        override componentDidMount() {
           events.push('componentDidMount')
         }
-        shouldComponentUpdate(nextProps: Props) {
+        override shouldComponentUpdate(nextProps: Props) {
           events.push('shouldComponentUpdate')
           return nextProps.a === 42
         }
-        componentWillUpdate() {
+        override componentWillUpdate() {
           events.push('componentWillUpdate')
         }
-        render() {
+        override render() {
           events.push('render')
         }
-        componentDidUpdate() {
+        override componentDidUpdate() {
           events.push('componentDidUpdate')
         }
-        componentWillUnmount() {
+        override componentWillUnmount() {
           events.push('componentWillUnmount')
         }
       }

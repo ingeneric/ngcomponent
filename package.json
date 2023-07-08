@@ -2,11 +2,11 @@
   "name": "@ingeneric/ngcomponent",
   "version": "5.2.0",
   "description": "A clean React-like abstraction for rendering non-Angular components within an Angular app.",
-  "main": "index.js",
-  "typings": "index.d.ts",
+  "main": "dist/ngcomponent.js",
+  "typings": "dist/ngcomponent.d.ts",
   "scripts": {
-    "build": "npm run clean && npm run lint && tsc",
-    "clean": "rm -f index.d.ts",
+    "build": "npm run clean && npm run lint && tsc -p tsconfig.build.json",
+    "clean": "rm -f dist/*",
     "lint": "tslint --project tsconfig.json",
     "prepublishOnly": "npm test",
     "pretest": "npm run build",
@@ -43,7 +43,8 @@
     "ngimport": "^1.0.0",
     "ts-jest": "^29.1.1",
     "tslint": "^5.9.1",
-    "tslint-no-circular-imports": "^0.2.1"
+    "tslint-no-circular-imports": "^0.2.1",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
     "@types/angular": "^1.6.42",
