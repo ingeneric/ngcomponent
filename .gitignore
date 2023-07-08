@@ -6,3 +6,4 @@ yarn-error.log
 *.js
 !karma.conf.js
 *.map
+.idea
