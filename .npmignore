@@ -1,10 +1,4 @@
-.circleci
 .DS_Store
-.vscode
-karma.conf.js
 node_modules
-test.d.ts
-test.js
-test.map
-tslint.json
-wallaby.js
+npm-debug.log
+/.idea
