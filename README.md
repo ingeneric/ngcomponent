@@ -1,20 +1,20 @@
 # NgComponent [![Build Status][build]](https://circleci.com/gh/coatue-oss/ngcomponent) [![npm]](https://www.npmjs.com/package/ngcomponent) [![mit]](https://opensource.org/licenses/MIT)
 
-[build]: https://img.shields.io/circleci/project/coatue-oss/ngcomponent.svg?branch=master&style=flat-square
-[npm]: https://img.shields.io/npm/v/ngcomponent.svg?style=flat-square
-[mit]: https://img.shields.io/npm/l/ngcomponent.svg?style=flat-square
+[build]: https://github.com/ingeneric/ngcomponent/actions/workflows/npm-publish.yml/badge.svg
+[npm]: https://img.shields.io/npm/v/@ingeneric/ngcomponent.svg
+[mit]: https://img.shields.io/npm/l/@ingeneric/ngcomponent.svg
+
+An actualized version of the NgComponent package.
 
 > A clean React-like abstraction for rendering non-Angular components within an Angular app.
 
 ## Installation
 
 ```sh
-# Using Yarn:
-yarn add ngcomponent angular angular-resource
-
-# Or, using NPM:
-npm install ngcomponent angular angular-resource --save
+npm i @ingeneric/ngcomponent --save
 ```
+
+**Warning:** This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and no longer provides a CommonJS export. If your project uses CommonJS, you will have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) or use the [dynamic `import()`](https://v8.dev/features/dynamic-import) function. Please don't open issues for questions regarding CommonJS / ESM.
 
 ## Usage
 
@@ -109,10 +109,7 @@ npm test
 ## Hacking On It
 
 ```sh
-# Just watch TypeScript:
-npm run watch
-
-# Or, watch TypeScript and run tests on change:
+# Watch TypeScript and run tests on change:
 npm run tdd
 ```
 
