@@ -1,7 +1,6 @@
 import { bootstrap, element, IControllerConstructor, Injectable, IScope, module } from 'angular'
-import { assign } from 'lodash'
 import { $compile, $rootScope } from 'ngimport'
-import NgComponent from './'
+import NgComponent from './ngcomponent.js'
 
 interface Props {
   a: number
@@ -13,7 +12,7 @@ interface State {
 
 describe('Component', () => {
   describe('#$onChanges', () => {
-    it('should call #render if any prop has changed', () => {
+    test('should call #render if any prop has changed', () => {
       class A extends NgComponent<Props, State> {
         render() { }
       }
@@ -45,17 +44,17 @@ describe('Component', () => {
       })
       expect(a.props).toEqual({ a: -10, b: 'bar' })
     })
-    it('should call #render even if props were not initialized to undefined by angular', () => {
+    test('should call #render even if props were not initialized to undefined by angular', () => {
       class A extends NgComponent<Props, State> {
         render() { }
       }
       let a = new A
       a.$onChanges({})
-      spyOn(a, 'render')
+      jest.spyOn(a, 'render')
       a.$onChanges({ a: { currentValue: 42, previousValue: 42, isFirstChange: () => false } })
       expect(a.render).toHaveBeenCalledWith()
     })
-    it('should not call #render if no props have changed', () => {
+    test('should not call #render if no props have changed', () => {
       let counter = 0
       class A extends NgComponent<Props, {}> {
         render() { counter++ }
@@ -81,37 +80,37 @@ describe('Component', () => {
   describe('lifecycle hooks', () => {
 
     describe('#componentWillMount', () => {
-      it('should get called when the component mounts', () => {
+      test('should get called when the component mounts', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
         }
-        const spy = spyOn(A.prototype, 'componentWillMount')
+        const spy = jest.spyOn(A.prototype, 'componentWillMount')
         renderComponent(A)
         expect(spy).toHaveBeenCalledWith()
       })
     })
 
     describe('#componentDidMount', () => {
-      it('should get called when the component mounts', () => {
+      test('should get called when the component mounts', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
         }
-        const spy = spyOn(A.prototype, 'componentDidMount')
+        const spy = jest.spyOn(A.prototype, 'componentDidMount')
         renderComponent(A)
         expect(spy).toHaveBeenCalledWith()
       })
     })
 
     describe('#componentWillReceiveProps', () => {
-      it('should not get called on initial render', () => {
+      test('should not get called on initial render', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
         }
-        const spy = spyOn(A.prototype, 'componentWillReceiveProps')
+        const spy = jest.spyOn(A.prototype, 'componentWillReceiveProps')
         renderComponent(A)
         expect(spy).not.toHaveBeenCalled()
       })
-      it('should get called when props update', (done) => {
+      test('should get called when props update', (done) => {
         class A extends NgComponent<Props, {}> {
           render() { }
           componentWillReceiveProps(props: Props) {
@@ -126,11 +125,11 @@ describe('Component', () => {
     })
 
     describe('#shouldComponentUpdate', () => {
-      it('should not get called on the initial render', () => {
+      test('should not get called on the initial render', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
         }
-        const spy = spyOn(A.prototype, 'shouldComponentUpdate')
+        const spy = jest.spyOn(A.prototype, 'shouldComponentUpdate')
         // tslint:disable-next-line:no-unused-variable
         const a = new A
         a.$onChanges({
@@ -139,14 +138,14 @@ describe('Component', () => {
         })
         expect(spy).not.toHaveBeenCalled()
       })
-      it('should render even if false on initial render', () => {
+      test('should render even if false on initial render', () => {
         class A extends NgComponent<Props, {}> {
           shouldComponentUpdate() {
             return false
           }
           render() { }
         }
-        const spy = spyOn(A.prototype, 'render')
+        const spy = jest.spyOn(A.prototype, 'render')
         // tslint:disable-next-line:no-unused-variable
         const a = new A
         a.$onChanges({
@@ -155,7 +154,7 @@ describe('Component', () => {
         })
         expect(spy).toHaveBeenCalled()
       })
-      it('should get called on subsequent renders', () => {
+      test('should get called on subsequent renders', () => {
         class A extends NgComponent<Props, {}> {
           constructor() {
             super()
@@ -163,7 +162,7 @@ describe('Component', () => {
           }
           render() { }
         }
-        const spy = spyOn(A.prototype, 'shouldComponentUpdate')
+        const spy = jest.spyOn(A.prototype, 'shouldComponentUpdate')
         const a = new A
         // first render
         a.$onChanges({
@@ -177,7 +176,7 @@ describe('Component', () => {
         })
         expect(spy).toHaveBeenCalledWith({ a: 42, b: 'foo' }, { c: false })
       })
-      it('should accept a custom comparator', () => {
+      test('should accept a custom comparator', () => {
         let counter = 0
         class A extends NgComponent<Props, {}> {
           render() { counter++ }
@@ -213,55 +212,55 @@ describe('Component', () => {
     })
 
     describe('#componentWillUpdate', () => {
-      it('should not get called on initial render', () => {
+      test('should not get called on initial render', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
         }
-        const spy = spyOn(A.prototype, 'componentWillUpdate')
+        const spy = jest.spyOn(A.prototype, 'componentWillUpdate')
         renderComponent(A)
         expect(spy).not.toHaveBeenCalled()
       })
-      it('should get called before the component renders', () => {
+      test('should get called before the component renders', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
           componentWillUpdate() { }
         }
         const { parentScope, scope } = renderComponent(A)
-        const spy = spyOn(scope.$ctrl, 'componentWillUpdate')
+        const spy = jest.spyOn(scope.$ctrl, 'componentWillUpdate')
         parentScope.$apply(() => parentScope.a = 20)
         expect(spy).toHaveBeenCalledWith({ a: 20, b: 'foo' }, {})
       })
     })
 
     describe('#componentDidUpdate', () => {
-      it('should not get called on initial render', () => {
+      test('should not get called on initial render', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
         }
-        const spy = spyOn(A.prototype, 'componentDidUpdate')
+        const spy = jest.spyOn(A.prototype, 'componentDidUpdate')
         renderComponent(A)
         expect(spy).not.toHaveBeenCalled()
       })
-      it('should get called after the component renders', () => {
+      test('should get called after the component renders', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
           componentDidUpdate() { }
         }
         const { parentScope, scope } = renderComponent(A)
-        const spy = spyOn(scope.$ctrl, 'componentDidUpdate')
+        const spy = jest.spyOn(scope.$ctrl, 'componentDidUpdate')
         parentScope.$apply(() => parentScope.a = 20)
         expect(spy).toHaveBeenCalledWith({ a: 20, b: 'foo' }, {})
       })
     })
 
     describe('#componentWillUnmount', () => {
-      it('should get called when the component unmounts', () => {
+      test('should get called when the component unmounts', () => {
         class A extends NgComponent<Props, {}> {
           render() { }
           componentWillUnmount() { }
         }
         const { parentScope, scope } = renderComponent(A)
-        const spy = spyOn(scope.$ctrl, 'componentWillUnmount')
+        const spy = jest.spyOn(scope.$ctrl, 'componentWillUnmount')
         parentScope.$destroy()
         expect(spy).toHaveBeenCalledWith()
       })
@@ -269,7 +268,7 @@ describe('Component', () => {
   })
 
   describe('overall lifecycle', () => {
-    it('should be called in correct order', () => {
+    test('should be called in correct order', () => {
       const events: string[] = []
       class A extends NgComponent<Props, {}> {
         componentWillMount() {
@@ -336,7 +335,7 @@ function renderComponent(controller: Injectable<IControllerConstructor>) {
   bootstrap(div(), ['test'])
 
   const el = element('<my-component a="a" b="b"></my-component>')
-  const parentScope = assign($rootScope.$new(true), {
+  const parentScope = Object.assign($rootScope.$new(true), {
     a: 10,
     b: 'foo'
   })

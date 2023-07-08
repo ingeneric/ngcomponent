@@ -1,7 +1,4 @@
-import { IChangesObject } from 'angular'
-import assign = require('lodash/assign')
-import mapValues = require('lodash/mapValues')
-import some = require('lodash/some')
+import type { IChangesObject } from 'angular'
 
 type OnChanges<T> = {
   [K in keyof T]: IChangesObject<T[K]>
@@ -27,14 +24,16 @@ abstract class NgComponent<
   public $onChanges(changes: OnChanges<Partial<Props>>) {
     const oldProps = this.props
 
-    // TODO: fix Lodash typings upstream
-    const newProps = mapValues(changes, 'currentValue') as Partial<Props>
+    const newProps = Object.keys(changes).reduce((acc, v: keyof Props) => {
+        acc[v] = changes[v].currentValue
+        return acc
+    }, {} as Partial<Props>)
 
     // TODO: implement nextState (which also means implement this.setState)
-    const nextProps = assign({}, this.props, newProps)
+    const nextProps = Object.assign({}, this.props, newProps)
 
     if (this.__isFirstRender) {
-      assign(this, { props: nextProps })
+      Object.assign(this, { props: nextProps })
       this.componentWillMount()
       this.render()
       this.__isFirstRender = false
@@ -42,7 +41,7 @@ abstract class NgComponent<
       if (!this.didPropsChange(newProps, oldProps)) return
       this.componentWillReceiveProps(nextProps)
       const shouldUpdate = this.shouldComponentUpdate(nextProps, this.state)
-      assign(this, { props: nextProps })
+      Object.assign(this, { props: nextProps })
       if (!shouldUpdate) return
 
       this.componentWillUpdate(this.props, this.state)
@@ -61,7 +60,7 @@ abstract class NgComponent<
   }
 
   protected didPropsChange(newProps: Partial<Props>, oldProps: Partial<Props>): boolean {
-    return some(newProps, (v, k) => v !== oldProps[k])
+    return Object.keys(newProps).some((k) => newProps[k] !== oldProps[k])
   }
 
   /*

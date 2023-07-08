@@ -4,21 +4,21 @@
       "dom",
       "es2015"
     ],
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "preserveConstEnums": true,
-    "outDir": ".",
+    "outDir": "dist",
     "sourceMap": true,
     "strict": true,
     "target": "es5",
     "skipLibCheck": true
   },
   "files": [
-    "./index.ts",
-    "./test.ts"
+    "./src/ngcomponent.ts",
+    "./src/ngcomponent.test.ts"
   ],
   "exclude": [
     "node_modules"
