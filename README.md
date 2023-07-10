@@ -1,15 +1,15 @@
-# NgComponent [![Build Status][build]](https://circleci.com/gh/coatue-oss/ngcomponent) [![npm]](https://www.npmjs.com/package/ngcomponent) [![mit]](https://opensource.org/licenses/MIT)
+# NgComponent [![Build Status][build]](https://github.com/ingeneric/ngcomponent/actions) [![npm]](https://www.npmjs.com/package/ngcomponent) [![license]](https://opensource.org/license/apache-2-0/)
 
 [build]: https://github.com/ingeneric/ngcomponent/actions/workflows/npm-publish.yml/badge.svg
 [npm]: https://img.shields.io/npm/v/@ingeneric/ngcomponent.svg
-[mit]: https://img.shields.io/npm/l/@ingeneric/ngcomponent.svg
+[license]: https://img.shields.io/npm/l/@ingeneric/ngcomponent.svg
 
-An actualized version of the NgComponent package.
+An actualized version of the [coatue-oss/ngcomponent](https://github.com/coatue-oss/ngcomponent) package.
 
 > A clean React-like abstraction for rendering non-Angular components within an Angular app.
 
 ## Installation
-
+``
 ```sh
 npm i @ingeneric/ngcomponent --save
 ```
@@ -104,13 +104,6 @@ NgComponent has a React-like component lifecycle API:
 
 ```sh
 npm test
-```
-
-## Hacking On It
-
-```sh
-# Watch TypeScript and run tests on change:
-npm run tdd
 ```
 
 ## License
