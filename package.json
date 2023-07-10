@@ -26,6 +26,9 @@
   ],
   "type": "module",
   "exports": "./dist/ngcomponent.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "npm run clean && npm run check && tsc -p tsconfig.build.json",
     "check": "prettier --check src && eslint src",
