@@ -32,9 +32,8 @@
     "check:fix": "prettier --write src && eslint --fix src",
     "clean": "rm -f dist/*",
     "prepublishOnly": "npm test",
-    "tdd": "jest --watch",
-    "pretest": "npm run build",
-    "test": "jest"
+    "tdd": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "dependencies": {
     "@types/angular": "^1.8.5",

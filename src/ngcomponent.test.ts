@@ -1,12 +1,7 @@
-import {
-  bootstrap,
-  element,
-  IControllerConstructor,
-  Injectable,
-  IScope,
-  module,
-} from 'angular';
-import { $compile, $rootScope } from 'ngimport';
+import { jest } from '@jest/globals';
+import type { IControllerConstructor, Injectable, IScope } from 'angular';
+import angular from 'angular';
+import ngimport from 'ngimport';
 import NgComponent from './ngcomponent.js';
 
 interface Props {
@@ -428,7 +423,7 @@ interface Scope extends IScope {
 }
 
 function renderComponent(controller: Injectable<IControllerConstructor>) {
-  module('test', ['bcherny/ngimport']).component('myComponent', {
+  angular.module('test', ['bcherny/ngimport']).component('myComponent', {
     bindings: {
       a: '<',
       b: '<',
@@ -437,9 +432,12 @@ function renderComponent(controller: Injectable<IControllerConstructor>) {
     template: `{{a}}`,
   });
 
-  bootstrap(div(), ['test']);
+  const rootEl = document.createElement('div');
 
-  const el = element('<my-component a="a" b="b"></my-component>');
+  angular.bootstrap(rootEl, ['test']);
+  const { $rootScope, $compile } = ngimport;
+
+  const el = angular.element('<my-component a="a" b="b"></my-component>');
   const parentScope = Object.assign($rootScope.$new(true), {
     a: 10,
     b: 'foo',
@@ -451,8 +449,4 @@ function renderComponent(controller: Injectable<IControllerConstructor>) {
     parentScope,
     scope,
   };
-}
-
-function div() {
-  return element(document.createElement('div'));
 }
