@@ -1,4 +1,4 @@
-# NgComponent [![Build Status][build]](https://github.com/ingeneric/ngcomponent/actions) [![npm]](https://www.npmjs.com/package/ngcomponent) [![license]](https://opensource.org/license/apache-2-0/)
+# NgComponent [![Build Status][build]](https://github.com/ingeneric/ngcomponent/actions) [![npm]](https://www.npmjs.com/package/@ingeneric/ngcomponent) [![license]](https://opensource.org/license/apache-2-0/)
 
 [build]: https://github.com/ingeneric/ngcomponent/actions/workflows/npm-publish.yml/badge.svg
 [npm]: https://img.shields.io/npm/v/@ingeneric/ngcomponent.svg
