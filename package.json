@@ -1,6 +1,6 @@
 {
   "name": "@ingeneric/ngcomponent",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "A clean React-like abstraction for rendering non-Angular components within an Angular app.",
   "keywords": [
     "angular",
